@@ -7,11 +7,13 @@ export class ClassComponent extends React.Component {
     super(props);
 
     this.state = {
-      result: 5,
+      result: '',
       userNumber: '',
       randomNumber: Math.floor(Math.random() * (this.props.max - this.props.min) +
       this.props.min),
       count: 0,
+      numberOfAttempts: 3,
+      newGame: false,
     };
   }
 
@@ -22,6 +24,14 @@ export class ClassComponent extends React.Component {
     }));
 
     this.setState(state => {
+      console.log(state);
+      console.log('state.numberOfAttempts - state.count: ', state.numberOfAttempts - state.count);
+      if (!(state.numberOfAttempts - state.count)) {
+        return {
+          result: `У вас закончились попытки`,
+          newGame: true,
+        };
+      }
       if (!state.userNumber) {
         return {
           result: `Введите число`
@@ -42,7 +52,8 @@ export class ClassComponent extends React.Component {
 
       return {
         result: `Вы угадали загаданное число ${state.userNumber},
-        попыток ${state.count}`
+        попыток ${state.count}`,
+        newGame: true,
       };
     });
   };
@@ -51,6 +62,18 @@ export class ClassComponent extends React.Component {
       userNumber: e.target.value,
     });
   };
+
+  handleReset = e => {
+    this.setState({
+      result: 5,
+      userNumber: '',
+      randomNumber: Math.floor(Math.random() * (this.props.max - this.props.min) +
+      this.props.min),
+      count: 0,
+      newGame: false,
+    });
+  };
+
   render() {
     console.log(this.state.count);
     return (
@@ -65,6 +88,9 @@ export class ClassComponent extends React.Component {
           />
           <button className={style.btn}>Угадать</button>
         </form>
+        {this.state.newGame ?
+          <button className={style.btn} type='button' onClick={this.handleReset}>Сыграть еще</button> :
+          ''}
       </div>
     );
   }
@@ -72,5 +98,5 @@ export class ClassComponent extends React.Component {
 
 ClassComponent.propTypes = {
   min: PropTypes.number,
-  max: PropTypes.munber,
+  max: PropTypes.number,
 };

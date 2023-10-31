@@ -15,6 +15,11 @@
     gap: 20px;
     justify-content: center;
     align-items: center;
+    margin-bottom: 20px;
+}
+
+.form:last-child {
+    margin-bottom: 0;
 }
 
 .label {
