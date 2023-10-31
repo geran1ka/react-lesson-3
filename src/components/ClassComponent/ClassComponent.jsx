@@ -7,7 +7,7 @@ export class ClassComponent extends React.Component {
     super(props);
 
     this.state = {
-      result: '',
+      result: 'Введите число',
       userNumber: '',
       randomNumber: Math.floor(Math.random() * (this.props.max - this.props.min) +
       this.props.min),
@@ -24,7 +24,6 @@ export class ClassComponent extends React.Component {
     }));
 
     this.setState(state => {
-      console.log(state);
       console.log('state.numberOfAttempts - state.count: ', state.numberOfAttempts - state.count);
       if (!(state.numberOfAttempts - state.count)) {
         return {
@@ -56,7 +55,12 @@ export class ClassComponent extends React.Component {
         newGame: true,
       };
     });
+
+    this.setState(state => ({
+      userNumber: '',
+    }));
   };
+
   handleChange = e => {
     this.setState({
       userNumber: e.target.value,
@@ -65,7 +69,7 @@ export class ClassComponent extends React.Component {
 
   handleReset = e => {
     this.setState({
-      result: 5,
+      result: 'Введите число',
       userNumber: '',
       randomNumber: Math.floor(Math.random() * (this.props.max - this.props.min) +
       this.props.min),
@@ -75,7 +79,6 @@ export class ClassComponent extends React.Component {
   };
 
   render() {
-    console.log(this.state.count);
     return (
       <div className={style.game}>
         <p className={style.result}>{this.state.result}</p>

@@ -29,6 +29,7 @@
 .input {
     height: 30px;
     width: 100px;
+    text-align: center;
 }
 
 .btn {
