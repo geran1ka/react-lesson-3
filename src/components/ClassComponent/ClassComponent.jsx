@@ -94,7 +94,7 @@ export class ClassComponent extends React.Component {
     });
   };
 
-  render() {
+  render(state) {
     return (
       <div className={style.game}>
         <p className={style.result}>{this.state.result}</p>
@@ -108,7 +108,7 @@ export class ClassComponent extends React.Component {
             id='user_number'
             onChange={this.handleChange}
             value={this.state.userNumber}
-            {...this.state.newGame && {disabled: true}}
+            disabled={!!this.state.newGame}
           />
           <Button>{this.state.newGame ? 'Сыграть еще' : 'Угадать'}</Button>
         </form>
