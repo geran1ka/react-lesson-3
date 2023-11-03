@@ -23,6 +23,18 @@ export class ClassComponent extends React.Component {
     e.preventDefault();
 
     this.setState(state => {
+      if (state.newGame) {
+        return {
+          result: 'Введите число',
+          userNumber: '',
+          userNumbers: [],
+          randomNumber: Math.floor(Math.random() * (this.props.max - this.props.min) +
+          this.props.min),
+          count: 0,
+          newGame: false,
+        };
+      }
+
       if (!state.userNumber) {
         return {
           result: `Введите число`
@@ -64,7 +76,6 @@ export class ClassComponent extends React.Component {
           result: `${state.userNumber} меньше загаданного`,
         };
       }
-
       return {
         result: `Вы угадали загаданное число ${state.userNumber},
         попыток ${state.count}`,
@@ -83,19 +94,6 @@ export class ClassComponent extends React.Component {
     });
   };
 
-  handleReset = e => {
-    e.preventDefault();
-    this.setState({
-      result: 'Введите число',
-      userNumber: '',
-      userNumbers: [],
-      randomNumber: Math.floor(Math.random() * (this.props.max - this.props.min) +
-      this.props.min),
-      count: 0,
-      newGame: false,
-    });
-  };
-
   render() {
     return (
       <div className={style.game}>
@@ -104,21 +102,15 @@ export class ClassComponent extends React.Component {
           <label className={style.label} htmlFor='user_number'>
             Угадай число
           </label>
-          {
-            this.state.newGame ?
-              <>
-                <input className={style.input} type='number' id='user_number'
-                  onChange={this.handleChange} value={this.state.userNumber} disabled />
-                <Button type='button' onClick={(e) => {
-                  this.handleReset(e);
-                }}>Сыграть еще</Button>
-              </> :
-              <>
-                <input className={style.input} type='number' id='user_number'
-                  onChange={this.handleChange} value={this.state.userNumber} />
-                <Button>Угадать</Button>
-              </>
-          }
+          <input
+            className={style.input}
+            type='number'
+            id='user_number'
+            onChange={this.handleChange}
+            value={this.state.userNumber}
+            {...this.state.newGame && {disabled: true}}
+          />
+          <Button>{this.state.newGame ? 'Сыграть еще' : 'Угадать'}</Button>
         </form>
       </div>
     );

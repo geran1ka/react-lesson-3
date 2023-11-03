@@ -5,5 +5,5 @@ import style from './Button.module.css';
 export const Button = props => <button className={style.btn} {...props}>{props.children}</button>;
 
 Button.propTypes = {
-  children: PropTypes.node,
+  children: PropTypes.string,
 };
